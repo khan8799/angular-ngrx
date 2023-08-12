@@ -1,0 +1,41 @@
+<div class="row my-3">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h3>Category</h3>
+            </div>
+            <div>
+                <button class="btn btn-light" [routerLink]="['add']">Add Category</button>
+            </div>
+        </div>
+
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let category of category$ | async">
+                    <td>{{ category.name }}</td>
+                    <td>{{ category.description }}</td>
+                    <td>
+                        <a
+                            [routerLink]="['edit', category._id]"
+                            class="btn btn-sm btn-primary me-2">
+                                Update
+                        </a>
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-danger"
+                            (click)="onDelete(category._id)">
+                                Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

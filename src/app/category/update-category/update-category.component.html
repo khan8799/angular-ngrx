@@ -1,0 +1,27 @@
+<div class="row mt-4">
+    <div class="col-md-6 offset-md-3">
+        <form [formGroup]="editForm" (submit)="onSubmit()">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    placeholder="Monkey D."
+                    formControlName="name">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="description"
+                    placeholder="Luffy"
+                    formControlName="description">
+            </div>
+            <div class="my-3">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
