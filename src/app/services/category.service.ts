@@ -16,6 +16,10 @@ export class CategoryService {
     return this.http.get<CategoryResponse>('category');
   }
 
+  detail(_id: string): Observable<AddCategoryResponse> {
+    return this.http.get<AddCategoryResponse>(`category/${_id}`);
+  }
+
   add(data: CategoryPayload): Observable<AddCategoryResponse> {
     return this.http.post<AddCategoryResponse>('category', data);
   }

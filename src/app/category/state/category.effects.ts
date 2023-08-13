@@ -3,10 +3,11 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { AppState } from "src/app/store/app.state";
 import { addCategory, addCategorySuccess, deleteCategory, deleteCategorySuccess, loadCategory, loadCategorySuccess, updateCategory, updateCategorySuccess } from "./category.actions";
-import { exhaustMap, finalize, map, of, tap } from "rxjs";
+import { exhaustMap, filter, finalize, map, of, switchMap, tap } from "rxjs";
 import { CategoryService } from "src/app/services/category.service";
 import { setErrorMessage, setLoadingSpinner } from "src/app/shared/state/shared.actions";
 import { Router } from "@angular/router";
+import { ROUTER_NAVIGATION, RouterNavigatedAction } from "@ngrx/router-store";
 
 @Injectable()
 export class CategoryEffects {
@@ -81,6 +82,25 @@ export class CategoryEffects {
                     .pipe(
                         finalize(() => this.store.dispatch(setLoadingSpinner({status: false}))),
                         map(data => deleteCategorySuccess(data))
+                    )
+            })
+        )
+    })
+
+    getSingleCategory$ = createEffect(() => {
+        return this.action$.pipe(
+            ofType(ROUTER_NAVIGATION),
+            filter((r: RouterNavigatedAction) => r.payload.routerState.url.startsWith('/category/edit')),
+            map((r: RouterNavigatedAction) => r.payload.routerState['params']['_id']),
+            switchMap(_id => {
+                return this._categoryService
+                    .detail(_id)
+                    .pipe(
+                        finalize(() => this.store.dispatch(setLoadingSpinner({status: false}))),
+                        map(data => {
+                            const category = [{...data.payload}]
+                            return loadCategorySuccess({category});
+                        })
                     )
             })
         )
