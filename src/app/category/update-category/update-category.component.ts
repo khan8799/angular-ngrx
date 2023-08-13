@@ -2,12 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Category, CategoryPayload } from 'src/app/model/category.model';
-import { setLoadingSpinner } from 'src/app/shared/state/shared.actions';
 import { AppState } from 'src/app/store/app.state';
-import { addCategory, updateCategory } from '../state/category.actions';
-import { ActivatedRoute, Router } from '@angular/router';
+import { updateCategory } from '../state/category.actions';
 import { getCategoryById } from '../state/category.selector';
 import { Subscription } from 'rxjs';
+import { setLoadingSpinner } from 'src/app/shared/state/shared.actions';
 
 @Component({
   selector: 'app-update-category',
@@ -15,29 +14,18 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./update-category.component.scss']
 })
 export class UpdateCategoryComponent implements OnInit, OnDestroy {
-  editForm!: FormGroup;
+  editForm: FormGroup;
   category: Category;
   categorySubscription: Subscription;
-  categoryId: string;
 
   constructor(
     private fb: FormBuilder,
     private store: Store<AppState>,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.initializeForm();
-
-    this.activatedRoute
-        .paramMap
-        .subscribe(
-          params => {
-            this.categoryId = params.get('_id');
-            this.getCategoryById();
-          }
-        )
+    this.getCategoryById();
   }
 
   ngOnDestroy(): void {
@@ -52,14 +40,12 @@ export class UpdateCategoryComponent implements OnInit, OnDestroy {
   }
 
   getCategoryById(): void {
+    this.store.dispatch(setLoadingSpinner({status: true}));
     this.categorySubscription = this.store
-        .select(getCategoryById, {_id: this.categoryId})
+        .select(getCategoryById)
         .subscribe(
           res => {
-            if (!res) {
-              this.router.navigate(['/category']);
-              return;
-            }
+            if (!res) return;
 
             this.category = res;
             this.populateForm();
@@ -76,7 +62,7 @@ export class UpdateCategoryComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     const updateData: CategoryPayload = {
-      _id: this.categoryId,
+      _id: this.category._id,
       name: this.editForm.value.name,
       description: this.editForm.value.description,
     }

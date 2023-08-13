@@ -12,6 +12,8 @@ import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loa
 import { AppReducer } from './store/app.state';
 import { AuthEffects } from './auth/state/auth.effects';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CustomSerializer } from './store/router/custom-serializer';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,9 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     StoreModule.forRoot(AppReducer),
     StoreDevtoolsModule.instrument({
       logOnly: false,
+    }),
+    StoreRouterConnectingModule.forRoot({
+      serializer: CustomSerializer
     })
   ],
   providers: [
