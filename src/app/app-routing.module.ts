@@ -1,31 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+import { SubCategoryComponent } from './sub-category/sub-category.component';
+import { CategoryComponent } from './category/category.component';
+import { ProductComponent } from './product/product.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
-  },
-  {
-    path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
-  },
-  {
-    path: 'counter',
-    loadChildren: () => import('./counter/counter.module').then(m => m.CounterModule)
-  },
-  {
-    path: 'posts',
-    loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule)
-  },
-  {
-    path: 'category',
-    loadChildren: () => import('./category/category.module').then(m => m.CategoryModule)
+    redirectTo: 'sub-category',
+    pathMatch: 'full'
   },
   {
     path: 'sub-category',
-    loadChildren: () => import('./sub-category/sub-category.module').then(m => m.SubCategoryModule)
+    component: SubCategoryComponent
+  },
+  {
+    path: 'category',
+    component: CategoryComponent
+  },
+  {
+    path: 'product',
+    component: ProductComponent
   }
 ];
 

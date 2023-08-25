@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { logoutStart } from 'src/app/auth/state/auth.actions';
-import { isAuthenticated } from 'src/app/auth/state/auth.selector';
-import { AppState } from 'src/app/store/app.state';
+
+interface Menus {
+  text: string;
+  path: string;
+}
 
 @Component({
   selector: 'app-header',
@@ -12,16 +13,27 @@ import { AppState } from 'src/app/store/app.state';
 })
 export class HeaderComponent implements OnInit {
   isAuthenticated$: Observable<boolean>;
+  menus: Menus[] = [
+    {
+      text: 'Sub Category',
+      path: 'sub-category'
+    },
+    {
+      text: 'Category',
+      path: 'category'
+    },
+    {
+      text: 'Product',
+      path: 'product'
+    }
+  ];
 
   constructor(
-    private store: Store<AppState>
   ) {}
   
   ngOnInit(): void {
-    this.isAuthenticated$ = this.store.select(isAuthenticated);
   }
 
   onLogout(): void {
-    this.store.dispatch(logoutStart())
   }
 }

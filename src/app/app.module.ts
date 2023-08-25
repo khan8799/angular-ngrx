@@ -3,37 +3,32 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { StoreModule } from '@ngrx/store';
-import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './shared/components/header/header.component';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { EffectsModule } from '@ngrx/effects';
 import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
-import { AppReducer } from './store/app.state';
-import { AuthEffects } from './auth/state/auth.effects';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { CustomSerializer } from './store/router/custom-serializer';
+import { TextHighlightDirective } from './shared/directives/text-highlight.directive';
+import { FormsModule } from '@angular/forms';
+import { SquareRootPipe } from './shared/pipes/square-root.pipe';
+import { SubCategoryComponent } from './sub-category/sub-category.component';
+import { CategoryComponent } from './category/category.component';
+import { ProductComponent } from './product/product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     HeaderComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    TextHighlightDirective,
+    SquareRootPipe,
+    SubCategoryComponent,
+    CategoryComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
-    HttpClientModule,
-    EffectsModule.forRoot([AuthEffects]),
-    StoreModule.forRoot(AppReducer),
-    StoreDevtoolsModule.instrument({
-      logOnly: false,
-    }),
-    StoreRouterConnectingModule.forRoot({
-      serializer: CustomSerializer
-    })
+    HttpClientModule
   ],
   providers: [
     {
@@ -41,6 +36,7 @@ import { CustomSerializer } from './store/router/custom-serializer';
       useClass: AuthInterceptor,
       multi: true,
     },
+    SquareRootPipe
   ],
   bootstrap: [AppComponent]
 })

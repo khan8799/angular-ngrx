@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-between">
+    <div>
+        <h3>Sub Category</h3>
+    </div>
+    <div>
+        <form class="d-flex" role="search">
+            <input
+                class="form-control me-2"
+                name="searchText"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                [(ngModel)]="searchText">
+            <button
+                class="btn btn-outline-success"
+                type="button"
+                (click)="onSearch()">Search</button>
+          </form>
+    </div>
+    <div>
+        <button class="btn btn-outline-success" [routerLink]="['add']">Add Sub Category</button>
+    </div>
+</div>
+
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let subCategory of subCategories">
+            <td>{{ subCategory.name }}</td>
+            <td>{{ subCategory.description }}</td>
+            <td>{{ subCategory.price | squareRoot:2 | number:'2.0-5' }}</td>
+            <td>
+                <div class="d-flex justify-content-between">
+                    <a
+                        [routerLink]="['edit', subCategory._id]"
+                        class="btn btn-sm btn-outline-primary me-2">
+                            Update
+                    </a>
+                    <button
+                        type="button"
+                        class="btn btn-sm btn-danger">
+                            Delete
+                    </button>
+                </div>
+                
+            </td>
+        </tr>
+    </tbody>
+</table>
