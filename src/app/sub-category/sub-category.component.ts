@@ -1,32 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { SubCategoryService } from '../services/sub-category.service';
+import { SubCategory } from '../models/Sub-Category';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription, filter } from 'rxjs';
 
 @Component({
   selector: 'app-sub-category',
   templateUrl: './sub-category.component.html',
   styleUrls: ['./sub-category.component.scss']
 })
-export class SubCategoryComponent {
-  subCategories: any[] = [
-    {
-      id: 1,
-      name: 'Shoes',
-      price: 10,
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis soluta corporis dolores consectetur at. Voluptatum, modi minima atque suscipit cupiditate dicta expedita ab, impedit natus maxime accusamus hic repellendus. Sequi.'
-    },
-    {
-      id: 2,
-      name: 'Jeans',
-      price: 20,
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis soluta corporis dolores consectetur at. Voluptatum, modi minima atque suscipit cupiditate dicta expedita ab, impedit natus maxime accusamus hic repellendus. Sequi.'
-    },
-    {
-      id: 2,
-      name: 'Bags',
-      price: 30,
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis soluta corporis dolores consectetur at. Voluptatum, modi minima atque suscipit cupiditate dicta expedita ab, impedit natus maxime accusamus hic repellendus. Sequi.'
-    }
-  ];
+export class SubCategoryComponent implements OnInit, OnDestroy {
+  subCategories: SubCategory[] = [];
   searchText: string = '';
+  isChildActivated: boolean = false;
+  routeSubscription: Subscription;
+
+  constructor(
+    private router: Router,
+    private _subCategoryService: SubCategoryService
+  ) {}
+
+  ngOnInit(): void {
+    this.routeSubscription = this.router
+        .events
+        .pipe(filter(event => event instanceof NavigationEnd))
+        .subscribe(
+          (res: NavigationEnd) => {
+            console.log(res);
+            
+            this.isChildActivated = res.url.includes('add') || res.url.includes('edit') ? true : false;
+          }
+        )
+    this.subCategories = this._subCategoryService.list();
+  }
+
+  ngOnDestroy(): void {
+    this.routeSubscription?.unsubscribe();
+  }
 
   onSearch() {
     console.log(this.searchText);

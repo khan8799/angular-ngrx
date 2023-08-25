@@ -12,6 +12,8 @@ import { SquareRootPipe } from './shared/pipes/square-root.pipe';
 import { SubCategoryComponent } from './sub-category/sub-category.component';
 import { CategoryComponent } from './category/category.component';
 import { ProductComponent } from './product/product.component';
+import { AddSubCategoryComponent } from './sub-category/add-sub-category/add-sub-category.component';
+import { EditSubCategoryComponent } from './sub-category/edit-sub-category/edit-sub-category.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { ProductComponent } from './product/product.component';
     SquareRootPipe,
     SubCategoryComponent,
     CategoryComponent,
-    ProductComponent
+    ProductComponent,
+    AddSubCategoryComponent,
+    EditSubCategoryComponent
   ],
   imports: [
     BrowserModule,

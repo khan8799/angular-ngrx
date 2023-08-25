@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 interface Menus {
   text: string;
@@ -12,7 +13,6 @@ interface Menus {
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  isAuthenticated$: Observable<boolean>;
   menus: Menus[] = [
     {
       text: 'Sub Category',
@@ -27,13 +27,21 @@ export class HeaderComponent implements OnInit {
       path: 'product'
     }
   ];
+  isLoggedIn$: Observable<boolean>;
 
   constructor(
+    private _authService: AuthService
   ) {}
   
   ngOnInit(): void {
+    this.isLoggedIn$ = this._authService.isLoggedIn$;
   }
 
-  onLogout(): void {
+  login(): void {
+    this._authService.login();
+  }
+
+  logout(): void {
+    this._authService.logout();
   }
 }
