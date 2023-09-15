@@ -5,7 +5,8 @@ import { CategoryComponent } from './category/category.component';
 import { ProductComponent } from './product/product.component';
 import { AddSubCategoryComponent } from './sub-category/add-sub-category/add-sub-category.component';
 import { EditSubCategoryComponent } from './sub-category/edit-sub-category/edit-sub-category.component';
-import { authGuard, authGuardChild } from './guards/auth.guard';
+import { authGuardChild } from './guards/auth.guard';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'product',
     component: ProductComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   }
 ];
 

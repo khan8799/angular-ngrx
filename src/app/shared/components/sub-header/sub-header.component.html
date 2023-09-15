@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-between">
+    <div>
+        <h3 appTextLarge appRainBowColor>
+            {{ title }}
+        </h3>
+        <ng-content select=".paragraph"></ng-content>
+    </div>
+    <div>
+        <div class="d-flex flex-column dropdown-container">
+            <div appDropDown class="dropdown-element">
+                <input
+                    class="form-control me-2"
+                    name="searchText"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search">
+            </div>
+
+            <div class="dropdown-content">
+                <p>abcd</p>
+                <p>abcd</p>
+                <p>abcd</p>
+                <p>abcd</p>
+                <p>abcd</p>
+                <p>abcd</p>
+                <p>abcd</p>
+                <p>abcd</p>
+            </div>
+        </div>
+        
+    </div>
+    <div>
+        <button class="btn btn-outline-success" [routerLink]="['add']">Add Sub Category</button>
+        <ng-content select=".filter-button"></ng-content>
+    </div>
+</div>

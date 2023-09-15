@@ -1,0 +1,31 @@
+<div class="d-flex flex-column align-items-center mt-4" (submit)="login()">
+    <form [formGroup]="loginForm" class="form-container">
+        <div class="text-start mb-3">
+            <h1>Login</h1>
+        </div>
+
+        <div class="mb-3">
+            <label for="contact" class="form-label">Contact</label>
+            <input
+                type="number"
+                class="form-control"
+                id="contact"
+                placeholder="123 456 7890"
+                formControlName="contact">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="*******"
+                formControlName="password">
+        </div>
+        
+        <div>
+            <button class="btn btn-outline-primary me-2">Cancel</button>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+    </form>
+</div>

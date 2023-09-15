@@ -1,28 +1,9 @@
 <div class="row m-4 pt-4">
     <div class="col-md-12 mb-4">
-        <div class="d-flex justify-content-between">
-            <div>
-                <h3>Sub Category</h3>
-            </div>
-            <div>
-                <form class="d-flex" role="search">
-                    <input
-                        class="form-control me-2"
-                        name="searchText"
-                        type="search"
-                        placeholder="Search"
-                        aria-label="Search"
-                        [(ngModel)]="searchText">
-                    <button
-                        class="btn btn-outline-success"
-                        type="button"
-                        (click)="onSearch()">Search</button>
-                </form>
-            </div>
-            <div>
-                <button *ngIf="!isChildActivated" class="btn btn-outline-success" [routerLink]="['add']">Add Sub Category</button>
-            </div>
-        </div>
+        <app-sub-header [headerTitle]="'Sub Category'">
+            <p #filterButton class="paragraph">Lorem ipsum dolor sit amet.</p>
+            <button #filterButton class="btn btn-success filter-button">Filter</button>
+        </app-sub-header>
     </div>
 
     <div class="col-md-8" [ngClass]="isChildActivated ? 'col-md-8' : 'col-md-12'">
@@ -36,30 +17,46 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let subCategory of subCategories">
-                    <td>{{ subCategory.name }}</td>
-                    <td>{{ subCategory.description }}</td>
-                    <td>{{ subCategory.price | squareRoot:2 | number:'2.0-5' }}</td>
-                    <td>
-                        <div class="d-flex justify-content-between">
-                            <button
-                                type="button"
-                                class="btn btn-sm btn-outline-danger me-2">
-                                    Delete
-                            </button>
-                            <a
-                                [routerLink]="['edit', subCategory.id]"
-                                class="btn btn-sm btn-primary">
-                                    Update
-                            </a>
-                        </div>
-                        
-                    </td>
-                </tr>
+                <ng-container *ngIf="subCategories.length; else noData" >
+                    <tr *ngFor="let subCategory of subCategories">
+                        <td>{{ subCategory.name }}</td>
+                        <td>{{ subCategory.description }}</td>
+                        <td>{{ subCategory.price | squareRoot:2 | number:'2.0-5' }}</td>
+                        <td>
+                            <div class="d-flex justify-content-between">
+                                <button
+                                    appButtonEffect
+                                    type="button"
+                                    class="btn btn-sm btn-outline-danger me-2">
+                                        Delete
+                                </button>
+                                <a
+                                    [routerLink]="['edit', subCategory.id]"
+                                    class="btn btn-sm btn-primary">
+                                        Update
+                                </a>
+                            </div>
+                            
+                        </td>
+                    </tr>
+                </ng-container>
+
+                <ng-template #noData>
+                    <ng-container *ngTemplateOutlet="noDataFound; context: {message: 'No data found'}"></ng-container>
+                </ng-template>
             </tbody>
         </table>
     </div>
     <div class="col-md-4">
         <router-outlet></router-outlet>
     </div>
+
+    <ng-template #noDataFound let-msg="message">
+        <tr>
+            <td colspan="4" class="text-center">
+                {{ msg }}
+            </td>
+        </tr>
+    </ng-template>
+    
 </div>

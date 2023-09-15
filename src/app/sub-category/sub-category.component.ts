@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SubCategoryService } from '../services/sub-category.service';
 import { SubCategory } from '../models/Sub-Category';
 import { NavigationEnd, Router } from '@angular/router';
@@ -10,6 +10,8 @@ import { Subscription, filter } from 'rxjs';
   styleUrls: ['./sub-category.component.scss']
 })
 export class SubCategoryComponent implements OnInit, OnDestroy {
+  // @ViewChild('title') headerTitle: ElementRef;
+
   subCategories: SubCategory[] = [];
   searchText: string = '';
   isChildActivated: boolean = false;
@@ -39,6 +41,7 @@ export class SubCategoryComponent implements OnInit, OnDestroy {
   }
 
   onSearch() {
-    console.log(this.searchText);
+    // (this.headerTitle.nativeElement as HTMLElement).style.color = 'red';
   }
+  
 }
